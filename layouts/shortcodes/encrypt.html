@@ -1,4 +1,3 @@
-{{ if .IsPage }}
 <div class="encrypted-content" data-password="{{ .Get 0 }}">
   <div class="encrypt-form">
     <div class="encrypt-header">
@@ -22,4 +21,3 @@
     {{ .Inner | markdownify }}
   </div>
 </div>
-{{ end }}
