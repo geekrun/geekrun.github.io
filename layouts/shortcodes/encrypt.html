@@ -1,0 +1,25 @@
+{{ if .IsPage }}
+<div class="encrypted-content" data-password="{{ .Get 0 }}">
+  <div class="encrypt-form">
+    <div class="encrypt-header">
+      <i class="fas fa-lock"></i>
+      <h3>Protected Content</h3>
+      <p>This content is password protected. Please enter the password to continue.</p>
+    </div>
+    <div class="encrypt-input-group">
+      <input type="password" placeholder="Enter password" class="encrypt-input" autocomplete="off">
+      <button class="encrypt-button">
+        <i class="fas fa-unlock"></i>
+        Decrypt
+      </button>
+    </div>
+    <div class="encrypt-error" style="display: none;">
+      <i class="fas fa-exclamation-triangle"></i>
+      <span>Incorrect password. Please try again.</span>
+    </div>
+  </div>
+  <div class="encrypted-text" style="display: none;">
+    {{ .Inner | markdownify }}
+  </div>
+</div>
+{{ end }}
