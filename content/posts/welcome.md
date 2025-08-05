@@ -55,7 +55,7 @@ This is encrypted content that only appears after entering the correct password.
 
 1. Customize the theme and content
 2. Add more blog posts
-3. Deploy to Vercel or GitHub Pages
+3. Deploy to GitHub Pages
 4. Share with the world!
 
 ---
