@@ -7,7 +7,7 @@ description: "About GeekRun - Tech enthusiast and developer"
 
 # About GeekRun
 
-Welcome to my personal blog! I am a technology enthusiast, developer, and geek who loves sharing knowledge and experiences.
+Welcome to my personal blog! I'm a technology enthusiast, developer, and geek who loves sharing knowledge and experiences.
 
 ## What I Write About
 
@@ -18,7 +18,7 @@ Welcome to my personal blog! I am a technology enthusiast, developer, and geek w
 
 ## My Background
 
-I am passionate about technology and love exploring new tools, languages, and frameworks. This blog serves as both a learning platform for me and a resource for others who share similar interests.
+I'm passionate about technology and love exploring new tools, languages, and frameworks. This blog serves as both a learning platform for me and a resource for others who share similar interests.
 
 ## Get in Touch
 
@@ -30,4 +30,4 @@ Feel free to reach out if you have questions, suggestions, or just want to chat 
 
 ---
 
-*This blog is built with [Hugo](https://gohugo.io/) and the [PaperMod](https://github.com/adityatelange/hugo-PaperMod) theme.*
+*This blog is built with [Hugo](https://gohugo.io/) and the [PaperMod](https://github.com/adityatelange/hugo-PaperMod) theme.* 

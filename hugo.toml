@@ -1,3 +1,162 @@
-baseURL = 'https://example.org/'
+baseURL = 'https://geekrun.github.io/'
 languageCode = 'en-us'
-title = 'My New Hugo Site'
+title = 'GeekRun'
+theme = 'PaperMod'
+
+# Site configuration
+[params]
+  # Basic site info
+  description = "Personal blog about technology, programming, and geek culture"
+  author = "GeekRun"
+  defaultTheme = "auto"
+  
+  # Enable features
+  ShowReadingTime = true
+  ShowShareButtons = true
+  ShowPostNavLinks = true
+  ShowBreadCrumbs = true
+  ShowCodeCopyButtons = true
+  ShowWordCount = true
+  ShowRssButtonInSectionTermList = true
+  
+  # Social icons
+  [params.socialIcons]
+    github = "https://github.com/geekrun"
+    twitter = "https://twitter.com/geekrun"
+    linkedin = "https://linkedin.com/in/geekrun"
+    email = "mailto:hello@geekrun.dev"
+  
+  # Profile mode (optional)
+  [params.profileMode]
+    enabled = true
+    title = "GeekRun"
+    subtitle = "Tech enthusiast, developer, and geek"
+    imageUrl = "/images/avatar.jpg"
+    imageTitle = "GeekRun"
+    buttons = [
+      {name = "Posts", url = "/posts/"},
+      {name = "Tags", url = "/tags/"},
+      {name = "About", url = "/about/"}
+    ]
+  
+  # Home page info
+  [params.homeInfoParams]
+    Title = "Hi there 👋"
+    Content = "Welcome to my personal blog where I share thoughts on technology, programming, and geek culture."
+  
+  # Comments (optional - can be enabled later)
+  [params.comments]
+    enabled = false
+  
+  # Search
+  [params.fuseOpts]
+    isCaseSensitive = false
+    shouldSort = true
+    location = 0
+    distance = 1000
+    threshold = 0.4
+    minMatchCharLength = 0
+    keys = ["title", "permalink", "summary", "content"]
+
+# Menu configuration
+[menu]
+  [[menu.main]]
+    identifier = "posts"
+    name = "Posts"
+    url = "/posts/"
+    weight = 10
+  [[menu.main]]
+    identifier = "tags"
+    name = "Tags"
+    url = "/tags/"
+    weight = 20
+  [[menu.main]]
+    identifier = "categories"
+    name = "Categories"
+    url = "/categories/"
+    weight = 30
+  [[menu.main]]
+    identifier = "about"
+    name = "About"
+    url = "/about/"
+    weight = 40
+  [[menu.main]]
+    identifier = "search"
+    name = "Search"
+    url = "/search/"
+    weight = 50
+
+# Taxonomies
+[taxonomies]
+  category = "categories"
+  tag = "tags"
+  series = "series"
+
+# Markup configuration for code highlighting
+[markup]
+  [markup.highlight]
+    noClasses = false
+    noHl = false
+    style = "dracula"
+    tabWidth = 2
+    lineNos = true
+    lineNumbersInTable = true
+    guessSyntax = true
+    noInlineHighlight = false
+    hl_Lines = ""
+    hl_inline = false
+    lineAnchors = ""
+    anchors = ""
+    codeFences = true
+    guessSyntax = true
+    useClasses = true
+
+# Build configuration
+[build]
+  writeStats = true
+
+# Security headers
+[security]
+  [security.exec]
+    allow = ['^dart-sass-embedded$', '^go$', '^npx$', '^postcss$', '^babel$']
+    osEnv = ['(?i)^(PATH|PATHEXT|APPDATA|TMP|TEMP|TERM)$']
+  [security.funcs]
+    getenv = ['^HUGO_']
+    getenv = ['^HUGO_']
+
+# Output formats
+[outputFormats]
+  [outputFormats.RSS]
+    mediaType = "application/rss"
+    baseName = "feed"
+    isPlainText = true
+    notAlternative = true
+
+# Media types
+[mediaTypes]
+  [mediaTypes."text/xml"]
+    suffixes = ["xml"]
+
+# Outputs
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+  section = ["HTML", "RSS"]
+  taxonomy = ["HTML", "RSS"]
+  term = ["HTML", "RSS"]
+  page = ["HTML"]
+
+# Privacy settings
+[privacy]
+  [privacy.vimeo]
+    disabled = false
+    simple = false
+  [privacy.twitter]
+    disabled = false
+    enableDNT = true
+    simple = false
+  [privacy.instagram]
+    disabled = false
+    simple = false
+  [privacy.youtube]
+    disabled = false
+    privacyEnhanced = true 
