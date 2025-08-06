@@ -1,25 +1,60 @@
 # Deployment Guide
 
-This guide provides step-by-step instructions for deploying your Hugo blog to Vercel (recommended) or GitHub Pages.
+This guide provides step-by-step instructions for deploying your Hugo blog to GitHub Pages (recommended) or Vercel.
 
-## Option 1: Vercel Deployment (Recommended)
+## Option 1: GitHub Pages Deployment (Recommended)
+
+### Step 1: Enable GitHub Pages
+
+1. **Go to repository settings**:
+   - Navigate to your repository on GitHub
+   - Go to Settings > Pages
+
+2. **Configure Pages**:
+   - **Source**: Deploy from a branch
+   - **Branch**: `main` (or `master`)
+   - **Folder**: `/ (root)`
+   - Click "Save"
+
+### Step 2: GitHub Actions Configuration
+
+The workflow file `.github/workflows/hugo.yml` is already configured and will:
+
+1. **Install Hugo Extended** (v0.148.2) on GitHub Actions
+2. **Checkout code** with submodules (including PaperMod theme)
+3. **Build site** with optimizations (`--gc --minify`)
+4. **Deploy to GitHub Pages** automatically
+
+### Step 3: Update Configuration
+
+Update your `hugo.toml`:
+
+```toml
+baseURL = 'https://yourusername.github.io/geekrun.github.io/'
+```
+
+### Step 4: Push and Deploy
+
+```bash
+git add .
+git commit -m "Update site configuration"
+git push origin main
+```
+
+The site will be automatically deployed to GitHub Pages.
+
+## Option 2: Vercel Deployment
 
 ### Step 1: Prepare Your Repository
 
 1. **Initialize Git and push to GitHub**:
    ```bash
-   cd geekrun-hugo
    git add .
    git commit -m "Initial Hugo blog setup"
    git branch -M main
-   git remote add origin https://github.com/yourusername/geekrun-hugo.git
+   git remote add origin https://github.com/yourusername/geekrun.github.io.git
    git push -u origin main
    ```
-
-2. **Update your GitHub repository settings**:
-   - Go to your repository on GitHub
-   - Update the repository description
-   - Add topics: `hugo`, `blog`, `static-site`
 
 ### Step 2: Connect to Vercel
 
@@ -30,7 +65,7 @@ This guide provides step-by-step instructions for deploying your Hugo blog to Ve
 2. **Import your repository**:
    - Click "New Project"
    - Import your GitHub repository
-   - Select the repository: `yourusername/geekrun-hugo`
+   - Select the repository: `yourusername/geekrun.github.io`
 
 3. **Configure build settings**:
    - **Framework Preset**: Hugo
@@ -40,14 +75,27 @@ This guide provides step-by-step instructions for deploying your Hugo blog to Ve
    - **Root Directory**: Leave empty (or `./` if needed)
 
 4. **Environment Variables** (optional):
-   - `HUGO_VERSION`: `0.148.2` (or your Hugo version)
+   - `HUGO_VERSION`: `0.148.2`
    - `HUGO_ENV`: `production`
 
 5. **Deploy**:
    - Click "Deploy"
    - Vercel will automatically build and deploy your site
 
-### Step 3: Custom Domain (Optional)
+### Step 3: GitHub Actions for Vercel (Optional)
+
+If you want to use GitHub Actions for Vercel deployment:
+
+1. **Add Vercel secrets** to your GitHub repository:
+   - Go to Settings > Secrets and variables > Actions
+   - Add the following secrets:
+     - `VERCEL_TOKEN`: Your Vercel API token
+     - `ORG_ID`: Your Vercel organization ID
+     - `PROJECT_ID`: Your Vercel project ID
+
+2. **The workflow** `.github/workflows/vercel.yml` will handle deployment
+
+### Step 4: Custom Domain (Optional)
 
 1. **Add custom domain**:
    - Go to your project settings in Vercel
@@ -58,7 +106,7 @@ This guide provides step-by-step instructions for deploying your Hugo blog to Ve
    - Add a CNAME record pointing to your Vercel domain
    - Or use Vercel's automatic DNS configuration
 
-### Step 4: Update Configuration
+### Step 5: Update Configuration
 
 After deployment, update your `hugo.toml`:
 
@@ -68,237 +116,66 @@ baseURL = 'https://your-vercel-domain.vercel.app/'
 # baseURL = 'https://blog.yourdomain.com/'
 ```
 
-## Option 2: GitHub Pages Deployment
+## Hugo Configuration Status
 
-### Step 1: Enable GitHub Pages
+✅ **Configuration Fixed**:
+- Removed duplicate `guessSyntax` and `getenv` entries
+- Fixed `encrypt` shortcode (removed `.IsPage` check)
+- Added missing `image` shortcode
+- Temporarily disabled `socialIcons` to fix build issues
+- PaperMod theme properly installed as submodule
 
-1. **Go to repository settings**:
-   - Navigate to your repository on GitHub
-   - Go to Settings > Pages
+✅ **Build Status**: Site builds successfully with `hugo --gc --minify`
 
-2. **Configure Pages**:
-   - **Source**: Deploy from a branch
-   - **Branch**: `main`
-   - **Folder**: `/ (root)`
-   - Click "Save"
-
-### Step 2: Update GitHub Actions
-
-The workflow file `.github/workflows/hugo.yml` is already configured. It will:
-
-1. Install Hugo on GitHub Actions
-2. Build your site with optimizations
-3. Deploy to GitHub Pages automatically
-
-### Step 3: Update Configuration
-
-Update your `hugo.toml`:
-
-```toml
-baseURL = 'https://yourusername.github.io/geekrun-hugo/'
-```
-
-## Post-Deployment Steps
-
-### 1. Test Your Site
-
-- Visit your deployed site
-- Test all features:
-  - Navigation menu
-  - Search functionality
-  - Encrypted content (password: `secret123`)
-  - Code highlighting
-  - Mobile responsiveness
-
-### 2. Update Content
-
-1. **Add your own posts**:
-   ```bash
-   hugo new posts/my-first-post.md
-   ```
-
-2. **Update personal information**:
-   - Edit `content/about/_index.md`
-   - Update social links in `hugo.toml`
-   - Add your avatar image to `static/images/avatar.jpg`
-
-3. **Customize the theme**:
-   - Modify colors in `hugo.toml`
-   - Add custom CSS in `assets/css/custom.css`
-   - Add custom JavaScript in `static/js/custom.js`
-
-### 3. SEO Optimization
-
-1. **Add meta tags**:
-   - Update description in `hugo.toml`
-   - Add Open Graph tags
-   - Configure Twitter Cards
-
-2. **Submit to search engines**:
-   - Submit your sitemap to Google Search Console
-   - Submit to Bing Webmaster Tools
-
-### 4. Analytics (Optional)
-
-1. **Google Analytics**:
-   - Add your GA4 tracking ID to `hugo.toml`
-   - Configure privacy settings
-
-2. **Alternative analytics**:
-   - Plausible Analytics
-   - Fathom Analytics
-   - Simple Analytics
-
-## Continuous Deployment
-
-### Automatic Updates
-
-Both Vercel and GitHub Pages will automatically redeploy when you:
-
-1. **Push changes to GitHub**:
-   ```bash
-   git add .
-   git commit -m "Update blog content"
-   git push origin main
-   ```
-
-2. **Create new posts**:
-   ```bash
-   hugo new posts/new-post.md
-   # Edit the post
-   git add .
-   git commit -m "Add new post"
-   git push origin main
-   ```
-
-### Local Development
-
-1. **Start development server**:
-   ```bash
-   hugo server -D
-   ```
-
-2. **Preview changes**:
-   - Visit http://localhost:1313
-   - Changes are reflected in real-time
-
-3. **Build for production**:
-   ```bash
-   hugo --minify
-   ```
+✅ **GitHub Actions**: Configured for both GitHub Pages and Vercel deployment
 
 ## Troubleshooting
 
 ### Common Issues
 
-1. **Build fails on Vercel**:
-   - Check Hugo version compatibility
-   - Verify theme submodule is included
-   - Check for syntax errors in `hugo.toml`
+1. **Build fails with schema errors**:
+   - Check for duplicate configuration keys in `hugo.toml`
+   - Ensure all shortcodes are properly defined
 
-2. **Theme not loading**:
-   ```bash
-   git submodule update --init --recursive
-   ```
+2. **Theme not found**:
+   - Run `git submodule update --init --recursive`
+   - Check `.gitmodules` file
 
-3. **Missing content**:
-   - Verify front matter syntax
-   - Check file permissions
-   - Ensure files are in correct directories
+3. **GitHub Pages not updating**:
+   - Check GitHub Actions logs
+   - Ensure repository has proper permissions
 
-4. **Encryption not working**:
-   - Check JavaScript console for errors
-   - Verify `static/js/encrypt.js` is loaded
-   - Test with correct password
+4. **Vercel deployment fails**:
+   - Check build logs in Vercel dashboard
+   - Verify Hugo version compatibility
 
 ### Performance Optimization
 
 1. **Enable compression**:
-   - Vercel: Automatic
-   - GitHub Pages: Add to `.github/workflows/hugo.yml`
+   ```toml
+   [server]
+     [server.headers]
+       for = "/*"
+       [server.headers.values]
+         X-Content-Type-Options = "nosniff"
+         X-Frame-Options = "DENY"
+         X-XSS-Protection = "1; mode=block"
+   ```
 
-2. **Optimize images**:
-   - Use WebP format
-   - Compress images before uploading
-   - Use Hugo's image processing
+2. **Image optimization**:
+   ```markdown
+   {{< image src="image.jpg" alt="Description" width="800" height="600" >}}
+   ```
 
-3. **Minify assets**:
+3. **Minification**:
    ```bash
    hugo --minify
    ```
 
-## Security Considerations
-
-### For Encrypted Content
-
-1. **Use strong passwords**:
-   - Avoid common passwords
-   - Use unique passwords for each post
-   - Consider using a password manager
-
-2. **Client-side limitations**:
-   - Remember that encryption is client-side
-   - Content is visible in HTML source
-   - Use for low-security content only
-
-3. **Alternative for high-security**:
-   - Consider server-side authentication
-   - Use external password-protected services
-   - Implement proper authentication systems
-
-## Monitoring and Maintenance
-
-### Regular Tasks
-
-1. **Update Hugo**:
-   ```bash
-   brew upgrade hugo  # macOS
-   ```
-
-2. **Update theme**:
-   ```bash
-   git submodule update --remote themes/PaperMod
-   ```
-
-3. **Backup content**:
-   - Regular Git commits
-   - Consider external backups
-   - Export content periodically
-
-### Performance Monitoring
-
-1. **Page speed**:
-   - Use Google PageSpeed Insights
-   - Monitor Core Web Vitals
-   - Optimize based on results
-
-2. **Uptime monitoring**:
-   - Set up uptime monitoring
-   - Configure alerts for downtime
-   - Monitor error rates
-
 ## Next Steps
 
-1. **Add more content**:
-   - Write regular blog posts
-   - Add project pages
-   - Create tutorials
-
-2. **Enhance features**:
-   - Add comments system
-   - Implement newsletter signup
-   - Add social sharing buttons
-
-3. **Customize design**:
-   - Modify theme colors
-   - Add custom fonts
-   - Create custom layouts
-
-4. **SEO improvements**:
-   - Add structured data
-   - Optimize for keywords
-   - Create internal linking strategy
-
----
-
-Your Hugo blog is now ready for production! 🚀 
+1. **Enable social icons** once schema issues are resolved
+2. **Add custom CSS** for better styling
+3. **Configure analytics** (Google Analytics, etc.)
+4. **Set up custom domain** if needed
+5. **Add more content** and posts 

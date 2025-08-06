@@ -19,12 +19,12 @@ theme = 'PaperMod'
   ShowWordCount = true
   ShowRssButtonInSectionTermList = true
   
-  # Social icons
-  [params.socialIcons]
-    github = "https://github.com/geekrun"
-    twitter = "https://twitter.com/geekrun"
-    linkedin = "https://linkedin.com/in/geekrun"
-    email = "mailto:hello@geekrun.dev"
+  # Social icons (disabled for now to fix build issues)
+  # [params.socialIcons]
+  #   github = "geekrun"
+  #   twitter = "geekrun"
+  #   linkedin = "geekrun"
+  #   email = "hello@geekrun.dev"
   
   # Profile mode (optional)
   [params.profileMode]
@@ -108,7 +108,6 @@ theme = 'PaperMod'
     lineAnchors = ""
     anchors = ""
     codeFences = true
-    guessSyntax = true
     useClasses = true
 
 # Build configuration
@@ -121,7 +120,6 @@ theme = 'PaperMod'
     allow = ['^dart-sass-embedded$', '^go$', '^npx$', '^postcss$', '^babel$']
     osEnv = ['(?i)^(PATH|PATHEXT|APPDATA|TMP|TEMP|TERM)$']
   [security.funcs]
-    getenv = ['^HUGO_']
     getenv = ['^HUGO_']
 
 # Output formats
