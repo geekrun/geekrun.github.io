@@ -33,9 +33,13 @@ print(result)
 
 ## Protected Content
 
-The following content is password protected. The password is `secret123`.
+The following content is password protected. You can use the default password `geekrun123` or specify a custom password.
 
-{{< encrypt "secret123" >}}
+### Example 1: Using Default Password
+
+{{< encrypt >}}
+
+This content uses the default password configured in `hugo.toml`: **geekrun123**
 
 ### Secret Information
 
@@ -46,6 +50,14 @@ This is the encrypted content that only appears after entering the correct passw
 - **API Keys**: `sk-1234567890abcdef`
 - **Database URL**: `postgresql://user:pass@localhost:5432/db`
 - **Admin Password**: `super_secret_admin_password`
+
+{{< /encrypt >}}
+
+### Example 2: Using Custom Password
+
+The following content uses a custom password: **secret123**
+
+{{< encrypt "secret123" >}}
 
 #### Private Notes
 

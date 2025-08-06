@@ -36,6 +36,15 @@ jobs:
           hugo-version: '0.148.2'
           extended: true
       
+      - name: Setup Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.21'
+      
+      - name: Install Hugo Encryptor
+        run: |
+          go install github.com/hugomods/encrypt/commands/encrypt@latest
+      
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v4
@@ -49,6 +58,10 @@ jobs:
             --gc \
             --minify \
             --baseURL "${{ steps.pages.outputs.base_url }}/"
+      
+      - name: Encrypt content
+        run: |
+          $HOME/go/bin/encrypt
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

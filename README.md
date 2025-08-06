@@ -78,27 +78,45 @@ readingTime: true
 ---
 ```
 
-## Encryption Feature
+## 🔐 Advanced Encryption Feature
 
-### Using Encrypted Content
+### 强大的文章加密功能
 
-To add password-protected content to any post:
+本博客使用 [HugoMods Encrypt](https://hugomods.com/docs/content/encrypt/) 模块，提供军用级 AES-256-GCM 加密。
 
+### 快速使用
+
+#### 1. 使用默认密码（geekrun123）
 ```markdown
-{{< encrypt "your-password" >}}
-
-This content is encrypted and requires a password to view.
-
+{{< encrypt >}}
+这里是需要加密的内容
 {{< /encrypt >}}
 ```
 
-### Features
+#### 2. 使用自定义密码
+```markdown
+{{< encrypt "自定义密码" >}}
+这里是需要加密的内容
+{{< /encrypt >}}
+```
 
-- 🔐 Client-side encryption
-- 🎨 Beautiful password entry UI
-- ⚡ Smooth animations
-- 📱 Mobile-friendly design
-- 🔄 Error handling with retry
+### 功能特性
+
+- 🔐 **AES-256-GCM加密**：军用级加密标准
+- 🎨 **现代化UI**：美观的密码输入界面  
+- ⚡ **智能记忆**：会话期间记住密码
+- 📱 **移动适配**：完美支持各种设备
+- 🔄 **部分加密**：同一文章混合公开/加密内容
+- 🌐 **SEO友好**：只加密指定内容
+
+### 配置选项
+
+在 `hugo.toml` 中自定义：
+```toml
+[params.encrypt]
+  password = "your-default-password"  # 默认密码
+  storage = "session"                 # session 或 local
+```
 
 ## Configuration
 

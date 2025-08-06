@@ -110,6 +110,11 @@ theme = 'PaperMod'
     codeFences = true
     useClasses = true
 
+# Hugo modules configuration
+[module]
+  [[module.imports]]
+    path = 'github.com/hugomods/encrypt'
+
 # Build configuration
 [build]
   writeStats = true
@@ -142,6 +147,11 @@ theme = 'PaperMod'
   taxonomy = ["HTML", "RSS"]
   term = ["HTML", "RSS"]
   page = ["HTML"]
+
+# Encryption configuration
+[params.encrypt]
+  password = "geekrun123"
+  storage = "session"
 
 # Privacy settings
 [privacy]
