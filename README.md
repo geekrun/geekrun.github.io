@@ -82,7 +82,7 @@ readingTime: true
 
 ### 强大的文章加密功能
 
-本博客使用 [HugoMods Encrypt](https://hugomods.com/docs/content/encrypt/) 模块，提供军用级 AES-256-GCM 加密。
+本博客使用客户端JavaScript加密功能，提供安全的密码保护内容。
 
 ### 快速使用
 
