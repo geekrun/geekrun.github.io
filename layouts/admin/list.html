@@ -149,7 +149,7 @@
           }
         };
         // Force manual init only (avoid auto YAML discovery)
-        window.CMS_CONFIG = undefined;
+        window.CMS_CONFIG = { load_config_file: false };
         loadScript('https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js', init, () => {
           setStatus('unpkg failed, trying jsdelivr...');
           loadScript('https://cdn.jsdelivr.net/npm/decap-cms@3/dist/decap-cms.js', init, () => {
