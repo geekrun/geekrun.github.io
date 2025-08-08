@@ -3,7 +3,7 @@ title: "Admin"
 layout: admin
 url: /admin/
 _build:
-  list: never
+  list: always
   publishResources: true
   render: always
 ---
