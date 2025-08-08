@@ -94,6 +94,7 @@
             if (!(window.CMS && typeof window.CMS.init === 'function')) throw new Error('CMS.init unavailable');
             if (!OAUTH_BASE_URL) throw new Error('Missing OAUTH_BASE_URL');
             const decapConfig = {
+              load_config_file: false,
               backend: {
                 name: 'github',
                 repo: 'geekrun/geekrun.github.io',
