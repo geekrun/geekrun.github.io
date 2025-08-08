@@ -55,3 +55,7 @@ node_modules/
 
 # Hugo extended version
 hugo_extended_* 
+bin/hugo.exe
+bin/LICENSE
+hugo.zip
+bin/README.md

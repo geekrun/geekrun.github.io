@@ -35,16 +35,10 @@
     <div id="cms" class="cms-root hidden"></div>
 
     <script>
-      {{/* Read from Hugo params injected via HUGO_PARAMS_* envs */}}
-      {{- $adminHash := or (.Site.Params.admin_password_sha256) (index .Site.Params "ADMIN_PASSWORD_SHA256") (.
-        Site.Params.adminPasswordSha256) -}}
-      {{- $persist := or (.Site.Params.admin_password_persist) (index .Site.Params "ADMIN_PASSWORD_PERSIST") (.
-        Site.Params.adminPasswordPersist) -}}
-      {{- $oauth := or (.Site.Params.oauth_base_url) (index .Site.Params "OAUTH_BASE_URL") (.
-        Site.Params.oauthBaseUrl) -}}
-      const ADMIN_PASSWORD_SHA256 = "{{ $adminHash }}";
-      const USE_SESSION = {{ if eq (printf "%v" $persist) "local" }}false{{ else }}true{{ end }};
-      const OAUTH_BASE_URL = "{{ $oauth }}" || "https://your-oauth-app.vercel.app";
+      // Read from Hugo environment variables (whitelisted prefix HUGO_)
+      const ADMIN_PASSWORD_SHA256 = "{{ getenv "HUGO_PARAMS_ADMIN_PASSWORD_SHA256" }}";
+      const USE_SESSION = {{ if eq (getenv "HUGO_PARAMS_ADMIN_PASSWORD_PERSIST") "local" }}false{{ else }}true{{ end }};
+      const OAUTH_BASE_URL = "{{ getenv "HUGO_PARAMS_OAUTH_BASE_URL" }}" || "https://your-oauth-app.vercel.app";
 
       function sha256Hex(str) {
         const enc = new TextEncoder().encode(str);
