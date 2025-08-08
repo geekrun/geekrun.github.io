@@ -54,12 +54,12 @@ jobs:
         env:
           HUGO_ENVIRONMENT: production
           HUGO_ENV: production
-          # Admin gate password hash (optional). Set repo Secret ADMIN_PASSWORD_SHA256 to enable.
-          ADMIN_PASSWORD_SHA256: ${{ secrets.ADMIN_PASSWORD_SHA256 }}
+          # Admin gate password hash – must be passed via Hugo Params to satisfy security.funcs.getenv policy
+          HUGO_PARAMS_ADMIN_PASSWORD_SHA256: ${{ secrets.ADMIN_PASSWORD_SHA256 }}
           # Persist mode: "session" (default) or "local"
-          ADMIN_PASSWORD_PERSIST: ${{ vars.ADMIN_PASSWORD_PERSIST }}
+          HUGO_PARAMS_ADMIN_PASSWORD_PERSIST: ${{ vars.ADMIN_PASSWORD_PERSIST }}
           # OAuth base URL for Decap CMS GitHub provider
-          OAUTH_BASE_URL: ${{ vars.OAUTH_BASE_URL }}
+          HUGO_PARAMS_OAUTH_BASE_URL: ${{ vars.OAUTH_BASE_URL }}
         run: |
           hugo \
             --gc \

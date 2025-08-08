@@ -2,7 +2,7 @@
 title: "Admin"
 layout: admin
 url: /admin/
-_build:
+build:
   list: always
   publishResources: true
   render: always
