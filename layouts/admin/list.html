@@ -68,6 +68,7 @@
         return saved && saved === ADMIN_PASSWORD_SHA256;
       }
 
+      let CMS_INITIALIZED = false;
       function setStatus(msg) { try { document.getElementById('status').textContent = msg; } catch {}
       }
 
@@ -80,6 +81,7 @@
       }
 
       function loadCMS() {
+        if (CMS_INITIALIZED) { return; }
         const gate = document.getElementById('gate');
         const cms = document.getElementById('cms');
         gate.classList.add('hidden');
@@ -91,6 +93,7 @@
           try {
             if (!(window.CMS && typeof window.CMS.init === 'function')) throw new Error('CMS.init unavailable');
             const decapConfig = {
+              load_config_file: false,
               backend: {
                 name: 'github',
                 repo: 'geekrun/geekrun.github.io',
@@ -137,6 +140,7 @@
               ],
             };
             window.CMS.init({ config: decapConfig });
+            CMS_INITIALIZED = true;
             setStatus('CMS loaded');
           } catch (e) {
             console.error(e);
@@ -156,6 +160,7 @@
       }
 
       async function tryUnlock() {
+        if (CMS_INITIALIZED) return;
         const error = document.getElementById('error');
         error.style.display = 'none';
         if (!ADMIN_PASSWORD_SHA256) { loadCMS(); return; }
