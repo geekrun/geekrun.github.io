@@ -33,6 +33,7 @@
     </div>
 
     <div id="cms" class="cms-root hidden"></div>
+    <div id="status" class="hint" style="position:fixed;left:12px;bottom:12px"></div>
 
     <script>
       // Read from Hugo environment variables (whitelisted prefix HUGO_)
@@ -67,6 +68,17 @@
         return saved && saved === ADMIN_PASSWORD_SHA256;
       }
 
+      function setStatus(msg) { try { document.getElementById('status').textContent = msg; } catch {}
+      }
+
+      function loadScript(src, cb, onErr) {
+        const s = document.createElement('script');
+        s.src = src;
+        s.onload = cb;
+        s.onerror = onErr;
+        document.body.appendChild(s);
+      }
+
       function loadCMS() {
         const gate = document.getElementById('gate');
         const cms = document.getElementById('cms');
@@ -74,10 +86,10 @@
         cms.classList.remove('hidden');
         // Tell Decap we will initialize manually with a JS config
         window.CMS_MANUAL_INIT = true;
-        const script = document.createElement('script');
-        script.src = 'https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js';
-        script.onload = () => {
-          if (window.CMS && typeof window.CMS.init === 'function') {
+        setStatus('Loading CMS...');
+        const init = () => {
+          try {
+            if (!(window.CMS && typeof window.CMS.init === 'function')) throw new Error('CMS.init unavailable');
             const decapConfig = {
               backend: {
                 name: 'github',
@@ -125,9 +137,20 @@
               ],
             };
             window.CMS.init({ config: decapConfig });
+            setStatus('CMS loaded');
+          } catch (e) {
+            console.error(e);
+            setStatus('CMS init failed');
+            alert('CMS 初始化失败：' + e.message);
           }
         };
-        document.body.appendChild(script);
+        loadScript('https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js', init, () => {
+          setStatus('unpkg failed, trying jsdelivr...');
+          loadScript('https://cdn.jsdelivr.net/npm/decap-cms@3/dist/decap-cms.js', init, () => {
+            setStatus('Failed to load CMS from CDNs');
+            alert('无法加载 Decap CMS 脚本，请检查网络或 CSP');
+          });
+        });
       }
 
       async function tryUnlock() {
