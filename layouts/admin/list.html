@@ -144,6 +144,8 @@
             alert('CMS 初始化失败：' + e.message);
           }
         };
+        // Force manual init only (avoid auto YAML discovery)
+        window.CMS_CONFIG = undefined;
         loadScript('https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js', init, () => {
           setStatus('unpkg failed, trying jsdelivr...');
           loadScript('https://cdn.jsdelivr.net/npm/decap-cms@3/dist/decap-cms.js', init, () => {
