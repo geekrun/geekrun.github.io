@@ -36,10 +36,10 @@
     <div id="status" class="hint" style="position:fixed;left:12px;bottom:12px"></div>
 
     <script>
-      // Read from Hugo environment variables (whitelisted prefix HUGO_)
-      const ADMIN_PASSWORD_SHA256 = "{{ getenv "HUGO_PARAMS_ADMIN_PASSWORD_SHA256" }}";
-      const USE_SESSION = {{ if eq (getenv "HUGO_PARAMS_ADMIN_PASSWORD_PERSIST") "local" }}false{{ else }}true{{ end }};
-      const OAUTH_BASE_URL = "{{ getenv "HUGO_PARAMS_OAUTH_BASE_URL" }}" || "https://your-oauth-app.vercel.app";
+      // Read from Hugo parameters (passed via HUGO_PARAMS_ prefix)
+      const ADMIN_PASSWORD_SHA256 = "{{ .Site.Params.admin_password_sha256 }}";
+      const USE_SESSION = {{ if eq (.Site.Params.admin_password_persist | default "session") "local" }}false{{ else }}true{{ end }};
+      const OAUTH_BASE_URL = "{{ .Site.Params.oauth_base_url }}";
 
       function sha256Hex(str) {
         const enc = new TextEncoder().encode(str);
@@ -69,7 +69,10 @@
       }
 
       let CMS_INITIALIZED = false;
-      function setStatus(msg) { try { document.getElementById('status').textContent = msg; } catch {}
+      function setStatus(msg) { 
+        try { 
+          document.getElementById('status').textContent = msg; 
+        } catch {} 
       }
 
       function loadScript(src, cb, onErr) {
@@ -86,13 +89,16 @@
         const cms = document.getElementById('cms');
         gate.classList.add('hidden');
         cms.classList.remove('hidden');
+        
         // Tell Decap we will initialize manually with a JS config
         window.CMS_MANUAL_INIT = true;
         setStatus('Loading CMS...');
+        
         const init = () => {
           try {
             if (!(window.CMS && typeof window.CMS.init === 'function')) throw new Error('CMS.init unavailable');
             if (!OAUTH_BASE_URL) throw new Error('Missing OAUTH_BASE_URL');
+            
             const decapConfig = {
               load_config_file: false,
               backend: {
@@ -140,6 +146,7 @@
                 },
               ],
             };
+            
             window.CMS.init({ config: decapConfig });
             CMS_INITIALIZED = true;
             setStatus('CMS loaded');
@@ -149,7 +156,8 @@
             alert('CMS 初始化失败：' + e.message);
           }
         };
-        // Force manual init only (avoid auto YAML discovery). Leave undefined so Decap won't parse it.
+        
+        // Force manual init only (avoid auto YAML discovery)
         window.CMS_CONFIG = undefined;
         loadScript('https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js', init, () => {
           setStatus('unpkg failed, trying jsdelivr...');
@@ -164,7 +172,12 @@
         if (CMS_INITIALIZED) return;
         const error = document.getElementById('error');
         error.style.display = 'none';
-        if (!ADMIN_PASSWORD_SHA256) { loadCMS(); return; }
+        
+        if (!ADMIN_PASSWORD_SHA256) { 
+          loadCMS(); 
+          return; 
+        }
+        
         const input = document.getElementById('password');
         const hash = await sha256Hex(input.value || '');
         if (hash === ADMIN_PASSWORD_SHA256) {
@@ -180,9 +193,10 @@
         if (e.key === 'Enter') tryUnlock();
       });
 
-      (async () => { if (await isAuthed()) loadCMS(); })();
+      // Check if already authenticated on page load
+      (async () => { 
+        if (await isAuthed()) loadCMS(); 
+      })();
     </script>
   </body>
-  </html>
-
-
+</html>
