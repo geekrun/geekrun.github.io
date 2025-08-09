@@ -36,9 +36,9 @@
     <div id="status" class="hint" style="position:fixed;left:12px;bottom:12px"></div>
 
     <script>
-      // Read from Hugo parameters (passed via HUGO_PARAMS_ prefix)
+      // Read from Hugo parameters (passed via HUGO_PARAMS_ prefix for Vercel)
       const ADMIN_PASSWORD_SHA256 = "{{ .Site.Params.admin_password_sha256 }}";
-      const USE_SESSION = {{ if eq (.Site.Params.admin_password_persist | default "session") "local" }}false{{ else }}true{{ end }};
+      const USE_SESSION = "{{ .Site.Params.admin_password_persist }}" === "local" ? false : true;
       const OAUTH_BASE_URL = "{{ .Site.Params.oauth_base_url }}";
 
       function sha256Hex(str) {

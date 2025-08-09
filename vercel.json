@@ -1,0 +1,12 @@
+{
+  "buildCommand": "hugo --gc --minify",
+  "outputDirectory": "public",
+  "framework": "hugo",
+  "build": {
+    "env": {
+      "HUGO_PARAMS_ADMIN_PASSWORD_SHA256": "@admin_password_sha256",
+      "HUGO_PARAMS_ADMIN_PASSWORD_PERSIST": "@admin_password_persist",
+      "HUGO_PARAMS_OAUTH_BASE_URL": "@oauth_base_url"
+    }
+  }
+}
