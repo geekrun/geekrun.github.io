@@ -1,4 +1,4 @@
-baseURL = 'https://geekrun.github.io/'
+baseURL = '/'
 languageCode = 'en-us'
 title = 'GeekRun'
 theme = 'PaperMod'
