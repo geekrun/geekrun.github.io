@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  hugo-dev:
+    build: .
+    ports:
+      - "1313:1313"
+    volumes:
+      # 挂载源代码目录，支持热重载
+      - .:/src
+      # 排除不需要的文件
+      - /src/public
+      - /src/resources
+      - /src/.hugo_build.lock
+    environment:
+      - HUGO_ENVIRONMENT=development
+      - HUGO_ENV=development
+      # 本地测试用的环境变量
+      - HUGO_PARAMS_ADMIN_PASSWORD_SHA256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      - HUGO_PARAMS_ADMIN_PASSWORD_PERSIST=local
+      - HUGO_PARAMS_OAUTH_BASE_URL=http://localhost:3000
+    command: server --bind 0.0.0.0 --port 1313 --disableFastRender --liveReloadPort 1313
+    restart: unless-stopped
